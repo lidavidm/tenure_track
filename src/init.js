@@ -6,8 +6,8 @@ let canvas = document.querySelector("#canvas");
 // Request an opaque context for antialiased text
 let context = canvas.getContext("2d", { alpha: false });
 
-// let stage = new TitleStage(context);
-let stage = new LabStage(context);
+let stage = new TitleStage(context);
+// let stage = new LabStage(context);
 stage.enter();
 
 let renderLoop = () => {
