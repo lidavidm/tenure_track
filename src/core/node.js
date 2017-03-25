@@ -65,6 +65,11 @@ export class Node {
         return pos;
     }
 
+    attr(attr, value) {
+        this[attr] = value;
+        return this;
+    }
+
     update() {
         for (let child of this.children) {
             child.parent = this;
