@@ -5,6 +5,8 @@ import { Text } from "../ui/text";
 
 export class LabStage extends Stage {
     enter() {
+        super.enter();
+
         let title = new Text("1 The Research Lab");
         this.title = new BorderBox(new LinearBox([title], "horizontal"));
         title.fontStyle = "bold";

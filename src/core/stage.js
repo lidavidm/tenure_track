@@ -2,6 +2,12 @@ export class Stage {
     constructor(ctx) {
         this.ctx = ctx;
         this.nodes = [];
+
+        this.eventHandlers = {
+            "mousedown": this.onmousedown.bind(this),
+        };
+
+        this._needsRedraw = false;
     }
 
     get boundingSize() {
@@ -18,11 +24,22 @@ export class Stage {
     }
 
     draw() {
+        this.update();
+
         this.ctx.clearRect(0, 0, this.boundingSize.w, this.boundingSize.h);
         this.ctx.fillStyle = "#FFF";
         this.ctx.fillRect(0, 0, this.boundingSize.w, this.boundingSize.h);
         for (let node of this.nodes) {
             node.draw(this.ctx);
+        }
+
+        this._needsRedraw = false;
+    }
+
+    requestRedraw() {
+        if (!this._needsRedraw) {
+            this._needsRedraw = true;
+            window.requestAnimationFrame(this.draw.bind(this));
         }
     }
 
@@ -31,7 +48,21 @@ export class Stage {
         this.nodes.push(child);
     }
 
+    /// Event handlers
+    onmousedown(e) {
+        this.requestRedraw();
+    }
+
     /// Lifecycle methods
-    enter() {}
-    exit() {}
+    enter() {
+        for (let [event, handler] of Object.entries(this.eventHandlers)) {
+            this.ctx.canvas.addEventListener(event, handler);
+        }
+    }
+
+    exit() {
+        for (let [event, handler] of Object.entries(this.eventHandlers)) {
+            this.ctx.canvas.removeEventListener(event, handler);
+        }
+    }
 }

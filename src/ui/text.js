@@ -33,3 +33,7 @@ export class Text extends Node {
         ctx.fillText(this.text, pos.x, pos.y);
     }
 }
+
+export class TextButton extends Text {
+
+}

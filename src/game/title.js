@@ -4,6 +4,8 @@ import { Text } from "../ui/text";
 
 export class TitleStage extends Stage {
     enter() {
+        super.enter();
+
         let title = new Text("Tenure Track");
         let subtitle = new Text("A New Method to Transform Undergraduates into Papers");
         let annotation = new Text("#CS Edition");
@@ -29,9 +31,8 @@ export class TitleStage extends Stage {
         saveGames.pos.x = this.boundingSize.w / 2;
         saveGames.pos.y = this.boundingSize.h / 2 + 40;
 
-        let instructions = new Text("1. Begin new paper");
-        instructions.fontSize = 25;
-        saveGames.add(instructions);
+        saveGames.add(new Text("1. Begin new paper")
+                      .attr("fontSize", 25));
 
         let testGame = new Text("2. by Prof. Michael Mauer");
         testGame.fontSize = 25;

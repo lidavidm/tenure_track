@@ -2,18 +2,23 @@ import { LabStage } from "./game/lab";
 import { TitleStage } from "./game/title";
 import { Text } from "./ui/text";
 
-let canvas = document.querySelector("#canvas");
-// Request an opaque context for antialiased text
-let context = canvas.getContext("2d", { alpha: false });
+let stage;
 
-let stage = new TitleStage(context);
-// let stage = new LabStage(context);
-stage.enter();
+// We need to listen to both, else for whatever reason Chrome fires
+// onload before all stylesheets are loaded
+window.addEventListener("DOMContentLoaded", function() {
+    let canvas = document.querySelector("#canvas");
+    // Request an opaque context for antialiased text
+    let context = canvas.getContext("2d", { alpha: false });
 
-let renderLoop = () => {
-    stage.update();
-    stage.draw();
-    window.requestAnimationFrame(renderLoop);
-};
+    stage = new TitleStage(context);
+    // let stage = new LabStage(context);
+    stage.enter();
 
-renderLoop();
+    stage.requestRedraw();
+
+});
+
+window.addEventListener("load", function() {
+    stage.requestRedraw();
+});
