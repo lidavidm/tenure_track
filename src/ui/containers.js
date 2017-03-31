@@ -27,6 +27,7 @@ export class BorderBox extends Node {
     drawBackground(ctx, pos, boundingSize) {
         ctx.lineWidth = this.borders.bottom;
         ctx.strokeStyle = this.borderColor;
+        ctx.beginPath();
         ctx.moveTo(pos.x, pos.y + boundingSize.h);
         ctx.lineTo(pos.x + boundingSize.w, pos.y + boundingSize.h);
         ctx.stroke();
