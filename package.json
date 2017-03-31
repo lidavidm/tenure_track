@@ -20,7 +20,5 @@
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-watch": "^3.2.2"
   },
-  "dependencies": {
-    "animejs": "^2.0.2"
-  }
+  "dependencies": {}
 }
