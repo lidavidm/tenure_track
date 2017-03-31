@@ -1,13 +1,79 @@
-export class Stage {
+import { Point } from "./node";
+
+export class StageContainer {
     constructor(ctx) {
         this.ctx = ctx;
-        this.nodes = [];
+        this.stages = [];
+        this._needsRedraw = false;
 
         this.eventHandlers = {
             "mousedown": this.onmousedown.bind(this),
         };
 
+        for (let [event, handler] of Object.entries(this.eventHandlers)) {
+            this.ctx.canvas.addEventListener(event, handler);
+        }
+
+        // for (let [event, handler] of Object.entries(this.eventHandlers)) {
+        //     this.ctx.canvas.removeEventListener(event, handler);
+        // }
+    }
+
+    get boundingSize() {
+        return {
+            w: this.ctx.canvas.clientWidth,
+            h: this.ctx.canvas.clientHeight,
+        };
+    }
+
+    add(stage) {
+        this.stages.push(stage);
+        stage.container = this;
+        stage.ctx = this.ctx;
+        stage.enter();
+        this.requestRedraw();
+    }
+
+    update() {
+        for (let stage of this.stages) {
+            stage.update();
+        }
+    }
+
+    draw() {
+        this.update();
+
+        this.ctx.clearRect(0, 0, this.boundingSize.w, this.boundingSize.h);
+        this.ctx.fillStyle = "#FFF";
+        this.ctx.fillRect(0, 0, this.boundingSize.w, this.boundingSize.h);
+
+        for (let stage of this.stages) {
+            this.ctx.save();
+            stage.draw();
+            this.ctx.restore();
+        }
+
         this._needsRedraw = false;
+    }
+
+    requestRedraw() {
+        if (!this._needsRedraw) {
+            this._needsRedraw = true;
+            window.requestAnimationFrame(this.draw.bind(this));
+        }
+    }
+
+    /// Event handlers
+    onmousedown(e) {
+        this.requestRedraw();
+    }
+}
+
+export class Stage {
+    constructor() {
+        this.ctx = null;
+        this.nodes = [];
+        this.offset = new Point(0, 0);
     }
 
     get boundingSize() {
@@ -24,22 +90,10 @@ export class Stage {
     }
 
     draw() {
-        this.update();
+        this.ctx.translate(this.offset.x, this.offset.y);
 
-        this.ctx.clearRect(0, 0, this.boundingSize.w, this.boundingSize.h);
-        this.ctx.fillStyle = "#FFF";
-        this.ctx.fillRect(0, 0, this.boundingSize.w, this.boundingSize.h);
         for (let node of this.nodes) {
             node.draw(this.ctx);
-        }
-
-        this._needsRedraw = false;
-    }
-
-    requestRedraw() {
-        if (!this._needsRedraw) {
-            this._needsRedraw = true;
-            window.requestAnimationFrame(this.draw.bind(this));
         }
     }
 
@@ -49,20 +103,14 @@ export class Stage {
     }
 
     /// Event handlers
-    onmousedown(e) {
-        this.requestRedraw();
+    onmousedown() {
+
     }
 
     /// Lifecycle methods
     enter() {
-        for (let [event, handler] of Object.entries(this.eventHandlers)) {
-            this.ctx.canvas.addEventListener(event, handler);
-        }
     }
 
     exit() {
-        for (let [event, handler] of Object.entries(this.eventHandlers)) {
-            this.ctx.canvas.removeEventListener(event, handler);
-        }
     }
 }
