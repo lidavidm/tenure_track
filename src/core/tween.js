@@ -13,6 +13,10 @@ export class Tween {
         this.duration = duration;
         this.remaining = duration;
         this.easing = easing;
+        this.promise = new Promise((resolve, reject) => {
+            this.resolve = resolve;
+            this.reject = reject;
+        });
     }
 
     update(t) {
@@ -21,6 +25,7 @@ export class Tween {
 
     completed() {
         this.update(1.0);
+        this.resolve();
     }
 }
 
@@ -71,10 +76,12 @@ export class Clock {
 
     tween(target, properties, options) {
         let duration = options.duration || 300;
+        let promises = [];
 
         for (let [prop, final] of Object.entries(properties)) {
             let tween = new Tween(target, prop, target[prop], final, duration, linearEase());
             this.tweens.push(tween);
+            promises.push(tween.promise);
         }
 
         if (!this.running) {
@@ -82,6 +89,8 @@ export class Clock {
             this.lastTimestamp = window.performance.now();
             window.requestAnimationFrame(this.tick.bind(this));
         }
+
+        return Promise.all(promises);
     }
 }
 
@@ -92,5 +101,5 @@ export function addUpdateListener(f) {
 }
 
 export function tween(target, properties, options) {
-    clock.tween(target, properties, options);
+    return clock.tween(target, properties, options);
 }

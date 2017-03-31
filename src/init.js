@@ -26,8 +26,12 @@ window.addEventListener("DOMContentLoaded", function() {
     stageContainer.add(title);
     stageContainer.add(lab);
 
-    tween(title.offset, { y: -480 }, { duration: 1000 });
-    tween(lab.offset, { y: 0 }, { duration: 1000 });
+    Promise.all([
+        tween(title.offset, { y: -480 }, { duration: 1000 }),
+        tween(lab.offset, { y: 0 }, { duration: 1000 })
+    ]).then(function() {
+        console.log('done');
+    });
 });
 
 window.addEventListener("load", function() {
