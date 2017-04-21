@@ -1,5 +1,21 @@
 import { Point } from "./node";
 
+class Event {
+    constructor() {
+
+    }
+}
+
+class MouseEvent extends Event {
+    constructor(x, y, button) {
+        super();
+        this.x = x;
+        this.y = y;
+        this.button = button;
+    }
+}
+MouseEvent.BUTTON_LEFT = 0;
+
 export class StageContainer {
     constructor(ctx) {
         this.ctx = ctx;
@@ -66,6 +82,11 @@ export class StageContainer {
     /// Event handlers
     onmousedown(e) {
         this.requestRedraw();
+        let evt = new MouseEvent(e.clientX, e.clientY, e.button);
+
+        for (let stage of this.stages) {
+            stage.onmousedown(evt);
+        }
     }
 }
 
