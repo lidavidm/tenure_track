@@ -26,14 +26,11 @@ export class LabStage extends Stage {
         this.options.pos = new Point(0, this.boundingSize.h);
         this.add(this.options);
 
-        let profName = new Text(this.state.professor.name);
-        let profTitle = new Text(this.state.professor.year);
-        profName.pos = new Point(0, this.title.absolutePos.y + this.title.absoluteSize.h);
-        profName.fontSize = 32;
-        profTitle.pos = new Point(0, 256);
-        profTitle.fontSize = 16;
-
-        this.add(profName);
-        this.add(profTitle);
+        this.professor = new LinearBox([
+            new Text(this.state.professor.name),
+            new Text(this.state.professor.year, { size: 24 }),
+        ], "vertical");
+        this.professor.pos = new Point(0, this.title.absolutePos.y + this.title.absoluteSize.h);
+        this.add(this.professor);
     }
 }
