@@ -75,6 +75,11 @@ export class Node {
         return pos;
     }
 
+    get absoluteSize() {
+        // TODO:
+        return this.size;
+    }
+
     attr(attr, value) {
         this[attr] = value;
         return this;
