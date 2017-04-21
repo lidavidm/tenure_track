@@ -4,6 +4,11 @@ import { BorderBox, LinearBox } from "../ui/containers";
 import { Text } from "../ui/text";
 
 export class LabStage extends Stage {
+    constructor(state) {
+        super();
+        this.state = state;
+    }
+
     enter() {
         super.enter();
 
@@ -11,6 +16,7 @@ export class LabStage extends Stage {
         this.title = new BorderBox(new LinearBox([title], "horizontal"));
         title.fontStyle = "bold";
         this.title.child.size = new Rect(this.boundingSize.w, "auto");
+        this.add(this.title);
 
         this.options = new LinearBox([
             new Text("Recruit Students"),
@@ -18,21 +24,16 @@ export class LabStage extends Stage {
         ], "horizontal");
         this.options.anchor = new Point(0, 1);
         this.options.pos = new Point(0, this.boundingSize.h);
-
-        let test1 = new Text("Figure 1. Current students");
-        let test1sub = new Text("See Section 1.1 for full roster");
-        test1.pos = new Point(0, 240);
-        test1.fontSize = 16;
-        test1sub.pos = new Point(0, 256);
-        test1sub.fontSize = 16;
-        let test2 = new Text("Figure 2. Current projects");
-        test2.pos = new Point(320, 240);
-        test2.fontSize = 16;
-
-        this.add(this.title);
         this.add(this.options);
-        this.add(test1);
-        this.add(test1sub);
-        this.add(test2);
+
+        let profName = new Text(this.state.professor.name);
+        let profTitle = new Text(this.state.professor.year);
+        profName.pos = new Point(0, this.title.absolutePos.y + this.title.absoluteSize.h);
+        profName.fontSize = 32;
+        profTitle.pos = new Point(0, 256);
+        profTitle.fontSize = 16;
+
+        this.add(profName);
+        this.add(profTitle);
     }
 }

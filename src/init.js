@@ -1,9 +1,13 @@
 import { StageContainer } from "./core/stage";
 import { tween, addUpdateListener } from "./core/tween";
 
+import * as game from "./game/game";
 import { LabStage } from "./game/lab";
 import { TitleStage } from "./game/title";
 import { Text } from "./ui/text";
+
+let player = new game.Student(0, "E Andersen", "Asst. Professor", 6);
+let state = new game.Lab(player);
 
 let stageContainer;
 
@@ -20,18 +24,8 @@ window.addEventListener("DOMContentLoaded", function() {
         stageContainer.draw();
     });
 
-    let title = new TitleStage();
-    let lab = new LabStage();
-    lab.offset.y = 480;
-    stageContainer.add(title);
+    let lab = new LabStage(state);
     stageContainer.add(lab);
-
-    Promise.all([
-        tween(title.offset, { y: -480 }, { duration: 1000 }),
-        tween(lab.offset, { y: 0 }, { duration: 1000 })
-    ]).then(function() {
-        console.log('done');
-    });
 });
 
 window.addEventListener("load", function() {

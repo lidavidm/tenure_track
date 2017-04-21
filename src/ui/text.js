@@ -1,12 +1,12 @@
 import { Node, Rect } from "../core/node";
 
 export class Text extends Node {
-    constructor(text, color="#000", family="Latin Modern Roman", size=30) {
+    constructor(text, options={}) {
         super();
         this.text = text;
-        this.color = color;
-        this.family = family;
-        this.fontSize = size;
+        this.color = options.color || "#000";
+        this.family = options.family || "Latin Modern Roman";
+        this.fontSize = options.size || 30;
         this.fontStyle = "";
     }
 
