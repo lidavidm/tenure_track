@@ -26,12 +26,22 @@ export class Rect {
 
 export class Node {
     constructor() {
-        this.stage = null;
+        this._stage = null;
         this.parent = null;
         this.children = [];
         this._pos = new Point(0, 0);
         this._size = new Rect(0, 0);
         this.anchor = new Point(0, 0);
+    }
+
+    get stage() {
+        if (this._stage) return this._stage;
+        if (this.parent) return this.parent.stage;
+        return null;
+    }
+
+    set stage(stage) {
+        this._stage = stage;
     }
 
     get pos() {
