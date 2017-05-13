@@ -25,11 +25,29 @@ export class BorderBox extends Node {
     }
 
     drawBackground(ctx, pos, boundingSize) {
-        ctx.lineWidth = this.borders.bottom;
         ctx.strokeStyle = this.borderColor;
         ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y + boundingSize.h);
-        ctx.lineTo(pos.x + boundingSize.w, pos.y + boundingSize.h);
+        if (this.borders.top) {
+            ctx.lineWidth = this.borders.top;
+            ctx.moveTo(pos.x, pos.y);
+            ctx.lineTo(pos.x + boundingSize.w, pos.y);
+        }
+        if (this.borders.bottom) {
+            ctx.lineWidth = this.borders.bottom;
+            ctx.moveTo(pos.x, pos.y + boundingSize.h);
+            ctx.lineTo(pos.x + boundingSize.w, pos.y + boundingSize.h);
+        }
+        if (this.borders.left) {
+            ctx.lineWidth = this.borders.left;
+            ctx.moveTo(pos.x, pos.y);
+            ctx.lineTo(pos.x, pos.y + boundingSize.h);
+        }
+        if (this.borders.right) {
+            ctx.lineWidth = this.borders.right;
+            ctx.moveTo(pos.x + boundingSize.w, pos.y);
+            ctx.lineTo(pos.x + boundingSize.w, pos.y + boundingSize.h);
+        }
+
         ctx.stroke();
     }
 }
