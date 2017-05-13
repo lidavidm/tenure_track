@@ -1,5 +1,7 @@
 import { Node, Rect } from "../core/node";
 
+const LINE_HEIGHT = 1.25;
+
 export class Text extends Node {
     constructor(text, options={}) {
         super();
@@ -15,7 +17,7 @@ export class Text extends Node {
 
         this.setupText(ctx);
         let measured = ctx.measureText(this.text);
-        return new Rect(measured.width, 1.5 * this.fontSize);
+        return new Rect(measured.width, LINE_HEIGHT * this.fontSize);
     }
 
     set size(_) {
@@ -30,7 +32,7 @@ export class Text extends Node {
 
     drawBackground(ctx, pos, boundingSize) {
         this.setupText(ctx);
-        ctx.fillText(this.text, pos.x, pos.y);
+        ctx.fillText(this.text, pos.x, pos.y + (LINE_HEIGHT - 1) * this.fontSize);
     }
 }
 
