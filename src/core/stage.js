@@ -96,12 +96,12 @@ export class StageContainer {
 
     /// Event handlers
     onmousedown(e) {
-        this.requestRedraw();
         let evt = new MouseEvent(e.clientX, e.clientY, e.button);
 
         for (let stage of this.stages) {
             stage.onmousedown(evt);
         }
+        this.requestRedraw();
     }
 }
 
@@ -139,8 +139,12 @@ export class Stage {
     }
 
     /// Event handlers
-    onmousedown() {
-
+    onmousedown(evt) {
+        for (let node of this.nodes) {
+            if (node.contains(evt.x, evt.y)) {
+                node.onmousedown(evt);
+            }
+        }
     }
 
     /// Lifecycle methods

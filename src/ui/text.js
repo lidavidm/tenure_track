@@ -62,4 +62,8 @@ export class TextButton extends BorderBox {
             bottom: 1,
         });
     }
+
+    onmousedown(evt) {
+        console.log("Button clicked");
+    }
 }

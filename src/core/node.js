@@ -100,6 +100,12 @@ export class Node {
         return this;
     }
 
+    contains(x, y) {
+        let ap = this.absolutePos;
+        let as = this.absoluteSize;
+        return x >= ap.x && x <= ap.x + as.w && y >= ap.y && y <= ap.y + as.h;
+    }
+
     update() {
         for (let child of this.children) {
             child.parent = this;
@@ -131,5 +137,14 @@ export class Node {
     add(node) {
         node.parent = this;
         this.children.push(node);
+    }
+
+    onmousedown(evt) {
+        for (let child of this.children) {
+            if (child.contains(evt.x, evt.y)) {
+                child.onmousedown(evt);
+                break;
+            }
+        }
     }
 }
