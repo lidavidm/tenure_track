@@ -1,7 +1,7 @@
 import { Point, Rect } from "../core/node";
 import { Stage } from "../core/stage";
 import { BorderBox, LinearBox } from "../ui/containers";
-import { Text } from "../ui/text";
+import { Text, TextButton } from "../ui/text";
 
 export class LabStage extends Stage {
     constructor(state) {
@@ -19,8 +19,8 @@ export class LabStage extends Stage {
         this.add(this.title);
 
         this.options = new LinearBox([
-            new Text("Recruit Students"),
-            new Text("Start Project"),
+            new TextButton("Recruit Students"),
+            new TextButton("Start Project"),
         ], "horizontal");
         this.options.anchor = new Point(0, 1);
         this.options.pos = new Point(0, this.boundingSize.h);

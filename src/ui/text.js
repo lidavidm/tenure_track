@@ -1,4 +1,5 @@
 import { Node, Rect } from "../core/node";
+import { BorderBox } from "./containers";
 
 const LINE_HEIGHT = 1.25;
 
@@ -36,6 +37,14 @@ export class Text extends Node {
     }
 }
 
-export class TextButton extends Text {
-
+export class TextButton extends BorderBox {
+    constructor(text, options={}) {
+        options.size = options.size || 24;
+        super(new Text(text, options), {
+            left: 1,
+            right: 1,
+            top: 1,
+            bottom: 1,
+        });
+    }
 }
