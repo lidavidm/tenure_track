@@ -2,6 +2,7 @@ export class Lab {
     constructor(professor) {
         this.projects = [];
         this.students = [];
+        this.assignments = {};  // { project: {student: [tasks]}}
         this.funding = 0;
         this.professor = professor;
     }
@@ -23,13 +24,6 @@ export class Task {
         this.description = description;
         this.components = components;
         // Components should be an array of work unit values
-    }
-}
-
-export class Assignment {
-    constructor(task) {
-        this.task = task;
-        this.students = {};
     }
 }
 
