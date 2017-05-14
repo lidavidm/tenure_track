@@ -16,7 +16,7 @@
 
 import { Point, Rect } from "../core/node";
 import { Stage } from "../core/stage";
-import { BorderBox, LinearBox } from "../ui/containers";
+import { BorderBox, LinearBox, HSpacer } from "../ui/containers";
 import { Text, TextButton } from "../ui/text";
 import * as game from "./game";
 
@@ -31,12 +31,29 @@ export class RecruitStage extends Stage {
 
         this.updateStudents();
 
+        let container = new LinearBox([], "vertical");
+
         // TODO: factor this out into something common
         let title = new Text("1.1 Recruit Research Assistants");
-        this.title = new BorderBox(new LinearBox([title], "horizontal"));
+        this.title = new BorderBox(new LinearBox([title], "horizontal"), {
+            bottom: 1,
+        });
         title.fontStyle = "bold";
         this.title.child.size = new Rect(this.boundingSize.w, "auto");
-        this.add(this.title);
+        container.add(this.title);
+
+        for (let recruit of this.state.recruits) {
+            let name = new Text(recruit.name, { size: 24 });
+            let button = new TextButton("Recruit", () => {}, { size: 20 });
+            button.strokeColor = "#00F";
+            let description = new Text(`${recruit.year}—Credit Hours: ${recruit.workUnits}`, { size: 20 });
+            container.add(new LinearBox([
+                name,
+                new LinearBox([button, new HSpacer(10), description], "horizontal"),
+            ], "vertical"));
+        }
+
+        this.add(container);
     }
 
     /**
@@ -48,7 +65,7 @@ export class RecruitStage extends Stage {
             this.state.recruits.push(new game.Student(
                 -1,
                 "Test Student",
-                "Test Year",
+                "Sophomore",
                 Math.ceil(Math.random() * 4),
             ));
         }
