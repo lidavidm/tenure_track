@@ -53,7 +53,7 @@ export class Text extends Node {
 }
 
 export class TextButton extends BorderBox {
-    constructor(text, options={}) {
+    constructor(text, callback, options={}) {
         options.size = options.size || 24;
         super(new Text(text, options), {
             left: 1,
@@ -61,9 +61,10 @@ export class TextButton extends BorderBox {
             top: 1,
             bottom: 1,
         });
+        this.callback = callback;
     }
 
     onmousedown(evt) {
-        console.log("Button clicked");
+        this.callback();
     }
 }
