@@ -18,6 +18,8 @@ import { BorderBox } from "./containers";
 
 const LINE_HEIGHT = 1.25;
 
+const SIZE_CACHE = {};
+
 export class Text extends Node {
     constructor(text, options={}) {
         super();
@@ -29,11 +31,17 @@ export class Text extends Node {
     }
 
     get size() {
+        const cacheKey = `${this.family} ${this.fontSize} ${this.text}`;
+        if (SIZE_CACHE[cacheKey]) {
+            return SIZE_CACHE[cacheKey];
+        }
         let ctx = this.stage.ctx;
 
         this.setupText(ctx);
         let measured = ctx.measureText(this.text);
-        return new Rect(measured.width, LINE_HEIGHT * this.fontSize);
+        let result   = new Rect(measured.width, LINE_HEIGHT * this.fontSize);
+        SIZE_CACHE[cacheKey] = result;
+        return result;
     }
 
     set size(_) {
