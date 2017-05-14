@@ -13,10 +13,13 @@
  * implied.  See the License for the specific language governing
  * permissions and limitations under the License.
  ********************************************************************/
+
 import { Point, Rect } from "../core/node";
+import { tween } from "../core/tween";
 import { Stage } from "../core/stage";
 import { BorderBox, LinearBox } from "../ui/containers";
 import { Text, TextButton } from "../ui/text";
+import { RecruitStage } from "./recruit";
 
 export class LabStage extends Stage {
     constructor(state) {
@@ -34,8 +37,21 @@ export class LabStage extends Stage {
         this.add(this.title);
 
         this.options = new LinearBox([
-            new TextButton("Recruit Students"),
-            new TextButton("Start Project"),
+            new TextButton("Recruit Students", () => {
+                let recruit = new RecruitStage(this.state);
+                this.container.add(recruit);
+                recruit.offset.y = this.boundingSize.h;
+                Promise.all([
+                    tween(this.offset, { y: -this.boundingSize.h }, {
+                        duration: 500,
+                    }),
+                    tween(recruit.offset, { y: 0 }, {
+                        duration: 500,
+                    }),
+                ]).then(() => {
+                });
+            }),
+            new TextButton("Start Project", () => {}),
         ], "horizontal");
         this.options.anchor = new Point(0, 1);
         this.options.pos = new Point(0, this.boundingSize.h);

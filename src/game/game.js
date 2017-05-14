@@ -13,10 +13,12 @@
  * implied.  See the License for the specific language governing
  * permissions and limitations under the License.
  ********************************************************************/
+
 export class Lab {
     constructor(professor) {
         this.projects = [];
         this.students = [];
+        this.recruits = [];
         this.assignments = {};  // { project: {student: [tasks]}}
         this.funding = 0;
         this.professor = professor;
