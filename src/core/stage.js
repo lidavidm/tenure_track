@@ -65,6 +65,16 @@ export class StageContainer {
         this.requestRedraw();
     }
 
+    remove(stage) {
+        stage.container = null;
+        stage.ctx = null;
+        let idx = this.stages.indexOf(stage);
+        if (idx === -1) return;
+        this.stages.splice(idx, 1);
+        stage.exit();
+        this.requestRedraw();
+    }
+
     update() {
         for (let stage of this.stages) {
             stage.update();

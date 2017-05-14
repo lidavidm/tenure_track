@@ -49,6 +49,7 @@ export class LabStage extends Stage {
                         duration: 500,
                     }),
                 ]).then(() => {
+                    this.container.remove(this);
                 });
             }),
             new TextButton("Start Project", () => {}),
