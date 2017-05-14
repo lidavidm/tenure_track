@@ -115,6 +115,6 @@ export function addUpdateListener(f) {
     clock.addUpdateListener(f);
 }
 
-export function tween(target, properties, options) {
+export function tween(target, properties, options={}) {
     return clock.tween(target, properties, options);
 }
