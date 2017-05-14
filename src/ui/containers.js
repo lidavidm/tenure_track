@@ -15,12 +15,19 @@
  ********************************************************************/
 import { Node, Point, Rect } from "../core/node";
 
+export class HSpacer extends Node {
+    constructor(w) {
+        super();
+        this.size = new Rect(w, 0);
+    }
+}
+
 export class BorderBox extends Node {
     constructor(child, borders=null) {
         super();
         this.add(child);
         this.child = child;
-        this.borderColor = "#000";
+        this.strokeColor = "#000";
 
         if (!borders) {
             this.borders = {
@@ -40,7 +47,7 @@ export class BorderBox extends Node {
     }
 
     drawBackground(ctx, pos, boundingSize) {
-        ctx.strokeStyle = this.borderColor;
+        ctx.strokeStyle = this.strokeColor;
         ctx.beginPath();
         if (this.borders.top) {
             ctx.lineWidth = this.borders.top;
