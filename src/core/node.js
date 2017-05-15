@@ -139,6 +139,13 @@ export class Node {
         this.children.push(node);
     }
 
+    removeAll() {
+        for (let child of this.children) {
+            child.parent = null;
+        }
+        this.children = [];
+    }
+
     onmousedown(evt) {
         for (let child of this.children) {
             if (child.contains(evt.x, evt.y)) {

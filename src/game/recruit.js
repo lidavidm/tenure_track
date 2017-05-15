@@ -42,18 +42,36 @@ export class RecruitStage extends Stage {
         this.title.child.size = new Rect(this.boundingSize.w, "auto");
         container.add(this.title);
 
+        this.studentList = new LinearBox([], "vertical");
+        container.add(this.studentList);
+        this.updateList();
+
+        this.add(container);
+    }
+
+    updateList() {
+        this.studentList.removeAll();
         for (let recruit of this.state.recruits) {
             let name = new Text(recruit.name, { size: 24 });
-            let button = new TextButton("Recruit", () => {}, { size: 20 });
+            let button = new TextButton("Recruit", () => {
+                let idx = this.state.recruits.indexOf(recruit);
+                if (idx === -1) {
+                    console.warn("Tried to recruit nonexistent student", recruit);
+                    return;
+                }
+
+                this.state.recruits.splice(idx, 1);
+                // TODO: update their ID
+                this.state.students.push(recruit);
+                this.updateList();
+            }, { size: 20 });
             button.strokeColor = "#00F";
             let description = new Text(`${recruit.year}—Credit Hours: ${recruit.workUnits}`, { size: 20 });
-            container.add(new LinearBox([
+            this.studentList.add(new LinearBox([
                 name,
                 new LinearBox([button, new HSpacer(10), description], "horizontal"),
             ], "vertical"));
         }
-
-        this.add(container);
     }
 
     /**
