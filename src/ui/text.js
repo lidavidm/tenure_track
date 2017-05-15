@@ -69,6 +69,7 @@ export class TextButton extends BorderBox {
             top: 1,
             bottom: 1,
         });
+        this.strokeColor = options.strokeColor || "#00F";
         this.callback = callback;
     }
 

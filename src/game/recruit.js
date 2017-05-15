@@ -65,7 +65,6 @@ export class RecruitStage extends Stage {
                 this.state.students.push(recruit);
                 this.updateList();
             }, { size: 20 });
-            button.strokeColor = "#00F";
             let description = new Text(`${recruit.year}—Credit Hours: ${recruit.workUnits}`, { size: 20 });
             this.studentList.add(new LinearBox([
                 name,
