@@ -39,18 +39,7 @@ export class LabStage extends Stage {
         this.options = new LinearBox([
             new TextButton("Recruit Students", () => {
                 let recruit = new RecruitStage(this.state);
-                this.container.add(recruit);
-                recruit.offset.y = this.boundingSize.h;
-                Promise.all([
-                    tween(this.offset, { y: -this.boundingSize.h }, {
-                        duration: 500,
-                    }),
-                    tween(recruit.offset, { y: 0 }, {
-                        duration: 500,
-                    }),
-                ]).then(() => {
-                    this.container.remove(this);
-                });
+                this.container.transitionFromTo(this, recruit, "below");
             }),
             new TextButton("Start Project", () => {}),
         ], "horizontal");

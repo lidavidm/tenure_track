@@ -19,6 +19,7 @@ import { Stage } from "../core/stage";
 import { BorderBox, LinearBox, HSpacer } from "../ui/containers";
 import { Text, TextButton } from "../ui/text";
 import * as game from "./game";
+import { LabStage } from "./lab";
 
 export class RecruitStage extends Stage {
     constructor(state) {
@@ -39,6 +40,12 @@ export class RecruitStage extends Stage {
         this.studentList = new LinearBox([], "vertical");
         container.add(this.studentList);
         this.updateList();
+
+        let goback = new TextButton("Return to Lab", () => {
+            let lab = new LabStage(this.state);
+            this.container.transitionFromTo(this, lab, "above");
+        });
+        container.add(goback);
 
         this.add(container);
     }
@@ -72,7 +79,7 @@ export class RecruitStage extends Stage {
      */
     updateStudents() {
         this.state.recruits = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 5; i++) {
             this.state.recruits.push(new game.Student(
                 -1,
                 "Test Student",

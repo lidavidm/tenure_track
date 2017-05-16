@@ -116,6 +116,33 @@ export class StageContainer {
         }
         this.requestRedraw();
     }
+
+    // TODO: make transition direction based on relative numbering of titles
+    transitionFromTo(source, stage, direction) {
+        this.add(stage);
+        if (direction === "above") {
+            stage.offset.y = -this.boundingSize.h;
+        }
+        else if (direction === "below") {
+            stage.offset.y = this.boundingSize.h;
+        }
+        else {
+            throw {
+                message: `StageContainer#transitionTo: invalid direction ${direction}`,
+            };
+        }
+
+        return Promise.all([
+            tween(source.offset, { y: -stage.offset.y }, {
+                duration: 500,
+            }),
+            tween(stage.offset, { y: 0 }, {
+                duration: 500,
+            }),
+        ]).then(() => {
+            this.remove(source);
+        });
+    }
 }
 
 export class Stage {
