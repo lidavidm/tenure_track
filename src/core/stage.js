@@ -13,7 +13,10 @@
  * implied.  See the License for the specific language governing
  * permissions and limitations under the License.
  ********************************************************************/
-import { Point } from "./node";
+import { Point, Rect } from "./node";
+import { tween } from "./tween";
+import { BorderBox, LinearBox, HSpacer } from "../ui/containers";
+import { Text } from "../ui/text";
 
 class Event {
     constructor() {
@@ -155,6 +158,17 @@ export class Stage {
                 node.onmousedown(evt);
             }
         }
+    }
+
+    /// Helper methods
+    makeTitle(sectionNumber, sectionTitle) {
+        let titleText = new Text(`${sectionNumber} ${sectionTitle}`);
+        let title = new BorderBox(new LinearBox([titleText], "horizontal"), {
+            bottom: 1,
+        });
+        titleText.fontStyle = "bold";
+        title.child.size = new Rect(this.boundingSize.w, "auto");
+        return title;
     }
 
     /// Lifecycle methods

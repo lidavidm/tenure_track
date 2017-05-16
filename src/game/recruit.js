@@ -33,13 +33,7 @@ export class RecruitStage extends Stage {
 
         let container = new LinearBox([], "vertical");
 
-        // TODO: factor this out into something common
-        let title = new Text("1.1 Recruit Research Assistants");
-        this.title = new BorderBox(new LinearBox([title], "horizontal"), {
-            bottom: 1,
-        });
-        title.fontStyle = "bold";
-        this.title.child.size = new Rect(this.boundingSize.w, "auto");
+        this.title = this.makeTitle("1.1", "Recruit Research Assistants");
         container.add(this.title);
 
         this.studentList = new LinearBox([], "vertical");
