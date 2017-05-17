@@ -49,14 +49,17 @@ export class Text extends Node {
     }
 
     setupText(ctx) {
-        ctx.textBaseline = "top";
+        // ctx.textBaseline = "top" renders differently between Chrome
+        // and Firefox. See FF bug #737852.
         ctx.fillStyle = this.color;
         ctx.font = `${this.fontStyle} ${this.fontSize}px ${this.family}`;
     }
 
     drawBackground(ctx, pos, boundingSize) {
+        // Manually adjust the text position since we can't use the
+        // textBaseline property.
         this.setupText(ctx);
-        ctx.fillText(this.text, pos.x, pos.y + (LINE_HEIGHT - 1) * this.fontSize);
+        ctx.fillText(this.text, pos.x, pos.y + (0.95 * LINE_HEIGHT) * this.fontSize);
     }
 }
 
