@@ -19,7 +19,7 @@ import { tween, addUpdateListener } from "./core/tween";
 import * as game from "./game/game";
 import { LabStage } from "./game/lab";
 import { TitleStage } from "./game/title";
-import { Text } from "./ui/text";
+import { Text, __clearSizeCache } from "./ui/text";
 
 let player = new game.Student(0, "E Andersen", "Asst. Professor", 6);
 let state = new game.Lab(player);
@@ -46,5 +46,6 @@ window.addEventListener("DOMContentLoaded", function() {
 });
 
 window.addEventListener("load", function() {
+    __clearSizeCache();
     stageContainer.requestRedraw();
 });

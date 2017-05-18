@@ -18,7 +18,15 @@ import { BorderBox } from "./containers";
 
 const LINE_HEIGHT = 1.25;
 
-const SIZE_CACHE = {};
+let SIZE_CACHE = {};
+
+// Needed because Chrome loads fonts weirdly; depending on the order
+// of events, fonts might not be loaded when DOMContentLoaded is
+// fired. Unfortunately, this means the size cache will contain the
+// wrong font.
+export function __clearSizeCache() {
+    SIZE_CACHE = {};
+}
 
 export class Text extends Node {
     constructor(text, options={}) {
