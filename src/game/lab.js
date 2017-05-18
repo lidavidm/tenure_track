@@ -20,6 +20,7 @@ import { Stage } from "../core/stage";
 import { BorderBox, LinearBox } from "../ui/containers";
 import { Text, TextButton } from "../ui/text";
 import { RecruitStage } from "./recruit";
+import { ProjectStartStage } from "./project";
 
 export class LabStage extends Stage {
     constructor(state) {
@@ -41,7 +42,10 @@ export class LabStage extends Stage {
                 let recruit = new RecruitStage(this.state);
                 this.container.transitionFromTo(this, recruit, "below");
             }),
-            new TextButton("Start Project", () => {}),
+            new TextButton("Start Project", () => {
+                let start = new ProjectStartStage(this.state);
+                this.container.transitionFromTo(this, start, "below");
+            }),
         ], "horizontal");
         this.options.anchor = new Point(0, 1);
         this.options.pos = new Point(0, this.boundingSize.h);
