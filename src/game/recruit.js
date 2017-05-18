@@ -62,7 +62,7 @@ export class RecruitStage extends Stage {
                 }
 
                 this.state.recruits.splice(idx, 1);
-                // TODO: update their ID
+                recruit.id = this.state._generateStudentId();
                 this.state.students.push(recruit);
                 this.updateList();
             }, { size: 20 });

@@ -22,6 +22,13 @@ export class Lab {
         this.assignments = {};  // { project: {student: [tasks]}}
         this.funding = 0;
         this.professor = professor;
+
+        this._studentIdCounter = professor.id + 1;
+    }
+
+    _generateStudentId() {
+        this._studentIdCounter += 1;
+        return this._studentIdCounter;
     }
 }
 
