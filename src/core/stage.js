@@ -129,7 +129,12 @@ export class StageContainer {
 
     onresize() {
         this.ctx.canvas.setAttribute("width", `${document.body.clientWidth}px`);
-        this.ctx.canvas.setAttribute("height", `${document.body.clientHeight}px`);
+        this.ctx.canvas.setAttribute("height", `${window.innerHeight}px`);
+
+        for (let stage of this.stages) {
+            stage.onresize();
+        }
+
         this.requestRedraw();
     }
 
@@ -201,6 +206,9 @@ export class Stage {
                 node.onmousedown(evt);
             }
         }
+    }
+
+    onresize() {
     }
 
     /// Helper methods
