@@ -69,4 +69,10 @@ export class LabStage extends Stage {
 
         this.add(this.projects);
     }
+
+    onresize() {
+        super.onresize();
+        this.title.child.size.w = this.boundingSize.w;
+        this.options.pos.y = this.boundingSize.h;
+    }
 }
