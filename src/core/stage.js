@@ -44,9 +44,19 @@ export class StageContainer {
             "mousedown": this.onmousedown.bind(this),
         };
 
+        this.globalEventHandlers = {
+            "resize": this.onresize.bind(this),
+        };
+
         for (let [event, handler] of Object.entries(this.eventHandlers)) {
             this.ctx.canvas.addEventListener(event, handler);
         }
+
+        for (let [event, handler] of Object.entries(this.globalEventHandlers)) {
+            window.addEventListener(event, handler);
+        }
+
+        this.onresize();
 
         // for (let [event, handler] of Object.entries(this.eventHandlers)) {
         //     this.ctx.canvas.removeEventListener(event, handler);
@@ -114,6 +124,12 @@ export class StageContainer {
         for (let stage of this.stages) {
             stage.onmousedown(evt);
         }
+        this.requestRedraw();
+    }
+
+    onresize() {
+        this.ctx.canvas.setAttribute("width", `${document.body.clientWidth}px`);
+        this.ctx.canvas.setAttribute("height", `${document.body.clientHeight}px`);
         this.requestRedraw();
     }
 
