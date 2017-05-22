@@ -22,6 +22,7 @@ import { TitleStage } from "./game/title";
 import { Text, __clearSizeCache } from "./ui/text";
 
 let player = new game.Student(0, "E Andersen", "Asst. Professor", 6);
+player.addSpecialization("educational technology");
 let state = new game.Lab(player);
 state.projects.push(new game.Project("Reduct", 0, {}));
 state.students.push(new game.Student(1, "M Mauer", "Junior", 2));

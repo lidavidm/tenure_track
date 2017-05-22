@@ -38,7 +38,11 @@ export class Student {
         this.name = name;
         this.year = year;
         this.workUnits = workUnits;
-        this.specializations = [];
+        this.specializations = {};
+    }
+
+    addSpecialization(name) {
+        this.specializations[name] = 1;
     }
 }
 
@@ -69,6 +73,23 @@ export class Project {
         this.tasks = [];
     }
 }
+
+Project.PRIMARY = [
+    "algorithms",
+    "blockchains",
+    "cryptocurrencies",
+    "cryptography",
+    "data structures",
+    "educational technology",
+    "graphics",
+    "processors",
+    "quantum computing",
+];
+
+Project.INTERDISCIPLINARY = [
+    "geonomics",
+    "linguistics",
+];
 
 // export class FeatureTask extends Task {
 
