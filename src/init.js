@@ -43,6 +43,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
     let lab = new LabStage(state);
     stageContainer.add(lab);
+    stageContainer.onresize();
 });
 
 window.addEventListener("load", function() {
