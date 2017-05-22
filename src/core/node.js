@@ -158,4 +158,13 @@ export class Node {
             }
         }
     }
+
+    onclick(evt) {
+        for (let child of this.children) {
+            if (child.contains(evt.x, evt.y)) {
+                child.onclick(evt);
+                break;
+            }
+        }
+    }
 }

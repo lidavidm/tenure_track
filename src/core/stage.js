@@ -42,6 +42,7 @@ export class StageContainer {
 
         this.eventHandlers = {
             "mousedown": this.onmousedown.bind(this),
+            "click":     this.onclick.bind(this),
         };
 
         this.globalEventHandlers = {
@@ -127,6 +128,15 @@ export class StageContainer {
         this.requestRedraw();
     }
 
+    onclick(e) {
+        let evt = new MouseEvent(e.clientX, e.clientY, e.button);
+
+        for (let stage of this.stages) {
+            stage.onclick(evt);
+        }
+        this.requestRedraw();
+    }
+
     onresize() {
         this.ctx.canvas.setAttribute("width", `${document.body.clientWidth}px`);
         this.ctx.canvas.setAttribute("height", `${window.innerHeight}px`);
@@ -204,6 +214,14 @@ export class Stage {
         for (let node of this.nodes) {
             if (node.contains(evt.x, evt.y)) {
                 node.onmousedown(evt);
+            }
+        }
+    }
+
+    onclick(evt) {
+        for (let node of this.nodes) {
+            if (node.contains(evt.x, evt.y)) {
+                node.onclick(evt);
             }
         }
     }
