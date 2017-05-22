@@ -139,6 +139,10 @@ export class Node {
         this.children.push(node);
     }
 
+    addAll(nodes) {
+        nodes.forEach(this.add.bind(this));
+    }
+
     removeAll() {
         for (let child of this.children) {
             child.parent = null;
