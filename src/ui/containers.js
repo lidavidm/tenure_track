@@ -27,7 +27,11 @@ export class BorderBox extends Node {
         super();
         this.add(child);
         this.child = child;
+
+        // TODO: move common styling to a superclass?
+        // TODO: make general stroke/fill objects?
         this.strokeColor = "#000";
+        this.fillColor = null;
 
         if (!borders) {
             this.borders = {
@@ -47,7 +51,13 @@ export class BorderBox extends Node {
     }
 
     drawBackground(ctx, pos, boundingSize) {
+        if (this.fillColor) {
+            ctx.fillStyle = this.fillColor;
+            ctx.fillRect(pos.x, pos.y, boundingSize.w, boundingSize.h);
+        }
+
         ctx.strokeStyle = this.strokeColor;
+
         ctx.beginPath();
         if (this.borders.top) {
             ctx.lineWidth = this.borders.top;
