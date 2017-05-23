@@ -18,6 +18,7 @@ import { Point, Rect } from "../core/node";
 import { Stage } from "../core/stage";
 import { BorderBox, LinearBox, HSpacer } from "../ui/containers";
 import { Text, TextButton } from "../ui/text";
+import * as utils from "../utils";
 import * as game from "./game";
 import { LabStage } from "./lab";
 
@@ -27,7 +28,9 @@ class SpecializationCard extends BorderBox {
             new Text(specialization, { size: 18 }),
             new Text(`Level ${level}`, { size: 16 }),
         ], "vertical"));
+        this.topic = specialization;
         this.handler = handler;
+        this.highlighted = false;
     }
 
     onclick() {
@@ -38,10 +41,12 @@ class SpecializationCard extends BorderBox {
 
     highlight() {
         this.fillColor = "#00F";
+        this.highlighted = true;
     }
 
     unhighlight() {
         this.fillColor = null;
+        this.highlighted = false;
     }
 }
 
@@ -71,28 +76,54 @@ export class ProjectStartStage extends Stage {
             return (card) => {
                 group.children.forEach((c) => c.unhighlight());
                 card.highlight();
+
+                this.updateIdeaPreview();
             };
         };
 
-        let specializations = new LinearBox([], "horizontal");
-        let specializationsHandler = makeHandler(specializations);
+        this.specializations = new LinearBox([], "horizontal");
+        let specializationsHandler = makeHandler(this.specializations);
         let cards = Object.entries(this.state.professor.specializations).map(([specialization, level]) => {
             return new SpecializationCard(specialization, level, specializationsHandler);
         });
-        specializations.addAll(cards);
-        container.add(specializations);
+        this.specializations.addAll(cards);
+        container.add(this.specializations);
 
         container.add(new Text("[Optional] Choose a second topic:"));
-        let subtopics = new LinearBox([], "horizontal");
-        let subtopicsHandler = makeHandler(subtopics);
-        let cards2 = game.Project.PRIMARY
+        this.subtopics = new LinearBox([], "horizontal");
+        let subtopicsHandler = makeHandler(this.subtopics);
+        let cards2 = Object.keys(game.Project.PRIMARY)
             .filter((s) => !this.state.professor.specializations[s])
             .map((specialization) => {
                 return new SpecializationCard(specialization, 0, subtopicsHandler);
             });
-        subtopics.addAll(cards2);
-        container.add(subtopics);
+        this.subtopics.addAll(cards2);
+        container.add(this.subtopics);
+
+        this.ideaPreview = new Text("");
+        container.add(new LinearBox([new Text("Your project idea: "), this.ideaPreview], "horizontal"));
 
         this.add(container);
+    }
+
+    updateIdeaPreview() {
+        let topic = this.specializations.children.find((n) => n.highlighted);
+        let subtopic = this.subtopics.children.find((n) => n.highlighted);
+
+        if (!topic) return;
+
+        topic = topic.topic;
+
+        if (subtopic) subtopic = subtopic.topic;
+
+        const topicChoices = game.Project.PRIMARY[topic].base;
+
+        let idea = utils.choice(topicChoices);
+        if (subtopic) {
+            let subtopicChoices = game.Project.PRIMARY[subtopic].modifier;
+            idea = `${utils.choice(subtopicChoices)} ${idea}`;
+        }
+
+        this.ideaPreview.text = idea;
     }
 }

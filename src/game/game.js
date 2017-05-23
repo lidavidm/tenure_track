@@ -74,17 +74,44 @@ export class Project {
     }
 }
 
-Project.PRIMARY = [
-    "algorithms",
-    "blockchains",
-    "cryptocurrencies",
-    "cryptography",
-    "data structures",
-    "educational technology",
-    "graphics",
-    "processors",
-    "quantum computing",
-];
+Project.PRIMARY = {
+    "algorithms": {
+        "base": [],
+        "modifier": [],
+    },
+    "blockchains": {
+        "base": [],
+        "modifier": ["distributed ledger", "proof-of-work"],
+    },
+    "cryptocurrencies": {
+        "base": [],
+        "modifier": [],
+    },
+    "cryptography": {
+        "base": [],
+        "modifier": [],
+    },
+    "data structures": {
+        "base": [],
+        "modifier": [],
+    },
+    "educational technology": {
+        "base": ["programming game", "automatic grader"],
+        "modifier": [],
+    },
+    "graphics": {
+        "base": [],
+        "modifier": [],
+    },
+    "processors": {
+        "base": [],
+        "modifier": [],
+    },
+    "quantum computing": {
+        "base": [],
+        "modifier": [],
+    },
+};
 
 Project.INTERDISCIPLINARY = [
     "geonomics",
