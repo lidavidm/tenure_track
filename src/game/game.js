@@ -75,42 +75,38 @@ export class Project {
 }
 
 Project.PRIMARY = {
+    "AI/ML": {
+        "base": ["conversational agent", "speech recognizer"],
+        "modifier": ["neural network", "deep learning"],
+    },
     "algorithms": {
-        "base": [],
-        "modifier": [],
+        "base": ["data structures"],
+        "modifier": ["randomized", "NP-hard", "approximate", "quantum"],
     },
     "blockchains": {
         "base": [],
         "modifier": ["distributed ledger", "proof-of-work"],
     },
-    "cryptocurrencies": {
-        "base": [],
-        "modifier": [],
-    },
     "cryptography": {
         "base": [],
-        "modifier": [],
-    },
-    "data structures": {
-        "base": [],
-        "modifier": [],
+        "modifier": ["quantum resistant"],
     },
     "educational technology": {
-        "base": ["programming game", "automatic grader"],
+        "base": ["programming game", "automatic grader", "MOOC", "language learning tool", "cognitive tutor"],
         "modifier": [],
     },
     "graphics": {
         "base": [],
-        "modifier": [],
+        "modifier": ["real-time"],
     },
     "processors": {
         "base": [],
-        "modifier": [],
+        "modifier": ["RISC"],
     },
-    "quantum computing": {
-        "base": [],
-        "modifier": [],
-    },
+    "programming languages": {
+        "base": ["compiler"],
+        "modifier": ["functional", "dependently typed"],
+    }
 };
 
 Project.INTERDISCIPLINARY = [

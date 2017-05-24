@@ -118,6 +118,7 @@ export class ProjectStartStage extends Stage {
 
         const topicChoices = game.Project.PRIMARY[topic].base;
 
+        // TODO: only change base topic when base topic selection changed
         let idea = utils.choice(topicChoices);
         if (subtopic) {
             let subtopicChoices = game.Project.PRIMARY[subtopic].modifier;
