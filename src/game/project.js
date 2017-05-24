@@ -103,19 +103,33 @@ export class ProjectStartStage extends Stage {
         this.ideaPreview = new Text("");
         container.add(new LinearBox([new Text("Your project idea: "), this.ideaPreview], "horizontal"));
 
+        container.add(new TextButton("Next: assign tasks >", () => {
+            let assign = new ProjectAssignStage(this.state, this.selected);
+            this.container.transitionFromTo(this, assign, "below");
+        }));
+
         this.add(container);
     }
 
-    updateIdeaPreview() {
+    get selected() {
         let topic = this.specializations.children.find((n) => n.highlighted);
         let subtopic = this.subtopics.children.find((n) => n.highlighted);
 
-        if (!topic) return;
+        if (!topic) return null;
 
         topic = topic.topic;
 
         if (subtopic) subtopic = subtopic.topic;
+        else          subtopic = null;
 
+        return {
+            topic: topic,
+            subtopic: subtopic,
+        };
+    }
+
+    updateIdeaPreview() {
+        let { topic, subtopic } = this.selected;
         const topicChoices = game.Project.PRIMARY[topic].base;
 
         // TODO: only change base topic when base topic selection changed
@@ -126,5 +140,30 @@ export class ProjectStartStage extends Stage {
         }
 
         this.ideaPreview.text = idea;
+    }
+}
+
+export class ProjectAssignStage extends Stage {
+    constructor(state, selected) {
+        super();
+        this.state = state;
+        this.selectedTopics = selected;
+    }
+
+    enter() {
+        super.enter();
+
+        let container = new LinearBox([], "vertical");
+
+        this.title = this.makeTitle("2.1", "Assign Tasks");
+        container.add(this.title);
+
+        let goback = new TextButton("Return to Lab", () => {
+            let lab = new LabStage(this.state);
+            this.container.transitionFromTo(this, lab, "above");
+        });
+        container.add(goback);
+
+        this.add(container);
     }
 }
